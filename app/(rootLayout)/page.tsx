@@ -1,8 +1,9 @@
-import { userService } from "@/services/user.service";
+import { authClient } from "@/lib/auth-client";
+
 
 export default async function Home() {
-    const data = await userService.getSession()
-    console.log(data)
+   const session = await authClient.getSession()
+   console.log(session)
   return (
     <div>
       Anamol Hasan
