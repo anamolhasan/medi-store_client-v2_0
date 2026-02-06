@@ -1,6 +1,6 @@
 
-import Navbar from '@/components/shared/Navbar'
-import Navbar1 from '@/components/shared/Navbar1'
+import Footer from '@/components/layout/Footer'
+import Navbar1 from '@/components/layout/Navbar1'
 import React from 'react'
 
 const layout = ({children}:{children:React.ReactNode}) => {
@@ -11,7 +11,7 @@ const layout = ({children}:{children:React.ReactNode}) => {
         <main className='container mx-auto'>
             {children}
         </main>
-        <footer>Footer</footer>
+        <Footer />
     </div>
   )
 }
