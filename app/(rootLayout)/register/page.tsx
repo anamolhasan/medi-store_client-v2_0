@@ -1,3 +1,4 @@
+import { RegisterForm } from "@/components/authentication/Register-form";
 
 
 export default function RegisterPage() {
