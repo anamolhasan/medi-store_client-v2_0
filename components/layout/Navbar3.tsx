@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
-import { useCart } from "@/context/CartContext";
+// import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";

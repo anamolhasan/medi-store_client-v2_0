@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -171,6 +171,67 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
                   }}
               </form.Field>
 
+              {/* password */}
+              <form.Field name="password">
+                                {(field) => {
+                                    const isInvalid =
+                                        field.state.meta.isTouched &&
+                                        !field.state.meta.isValid;
+
+                                    return (
+                                        <Field data-invalid={isInvalid}>
+                                            <FieldLabel htmlFor={field.name}> Password </FieldLabel>
+                                            <div className="relative">
+                                                <Input
+                                                    type={ showPassword && isFocused ? "text" : "password" }
+                                                    id={field.name}
+                                                    name={field.name}
+                                                    value={field.state.value}
+                                                    onChange={(e) => field.handleChange(e.target.value )}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() =>setIsFocused(false)}
+                                                    className="pr-10"
+                                                />
+                                                {isFocused && (
+                                                    <button
+                                                        type="button"
+                                                        onMouseDown={(e) =>
+                                                            e.preventDefault()
+                                                        }
+                                                        onClick={() =>
+                                                            setShowPassword(
+                                                                () =>
+                                                                    !showPassword,
+                                                            )
+                                                        }
+                                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                                        aria-label={
+                                                            showPassword
+                                                                ? "Hide password"
+                                                                : "Show password"
+                                                        }
+                                                    >
+                                                        {showPassword ? (
+                                                            <EyeOff className="h-4 w-4 cursor-pointer" />
+                                                        ) : (
+                                                            <Eye className="h-4 w-4 cursor-pointer" />
+                                                        )}
+                                                    </button>
+                                                )}
+                                            </div>
+
+                                            {isInvalid && (
+                                                <FieldError
+                                                    errors={
+                                                        field.state.meta.errors
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
+                                    );
+                                }}
+                            </form.Field>
+
               {/* role */}
               <form.Field name="role">
                  {(field) => (
@@ -201,6 +262,7 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
                   </Field>
                  )}
               </form.Field>
+
             </FieldGroup>
           </form>
         </CardContent>

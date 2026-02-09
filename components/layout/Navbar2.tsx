@@ -32,6 +32,7 @@ import { useSelector } from "react-redux";
 // import { RootState } from "../../store";
 import LogOut from "../modules/authentication/logout";
 import { User } from "@/types/user.type";
+import { RootState } from "@/store";
 
 interface MenuItem {
     title: string;
@@ -68,8 +69,8 @@ const Navbar2 = ({
     user,
     logo = {
         url: "/",
-        src: l,
-        msrc: mlogo,
+        src: '/l.png',
+        msrc: '/mlogo.png',
         alt: "logo",
     },
     menu = [

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./provider/ThemeProvider";
 import { Toaster } from "sonner";
+import ReduxProviderWrapper from "@/components/layout/ReduxProviderWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
+        <ReduxProviderWrapper>
+            <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -38,6 +40,8 @@ export default function RootLayout({
             {children}
             <Toaster richColors/>
           </ThemeProvider>
+        </ReduxProviderWrapper>
+        
       </body>
     </html>
   );
