@@ -29,4 +29,5 @@ export interface UpdateUser {
     phone?:string | null;
     role?:Role;
     status?:UserStatus;
+    address?:string;
 }
