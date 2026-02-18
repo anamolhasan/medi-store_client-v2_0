@@ -1,7 +1,10 @@
+import { Medicine } from "./medicine.type";
 
 
 export interface Category {
     id:string;
     name:string;
-    medicines: d;
+    medicines: Medicine[];
+    createdAt:string;
+    updatedAt:string;
 }
