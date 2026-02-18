@@ -16,6 +16,7 @@ export interface User {
     emailVerified:boolean;
     image?:string | null;
     phone?: string | null;
+    address?:string;
     role: Role;
     status:UserStatus;
     createdAt: string;

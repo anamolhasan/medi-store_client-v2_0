@@ -36,40 +36,9 @@ export const userService = {
         }
     },
 
-//  getSession: async () => {
-//     try {
-//         // const { cookies } = await import("next/headers");
-//         const cookieStore = await cookies();
-        
-//         // সব কুকি সরাসরি স্ট্রিং আকারে নিন
-//         const cookieHeader = cookieStore.toString(); 
 
-//         const res = await fetch(`${process.env.AUTH_URL}/get-session`, {
-//             headers: {
-//                 // ব্রাউজারের অরিজিনাল কুকি হেডারটি হুবহু পাঠান
-//                 "Cookie": cookieHeader,
-//                 "Accept": "application/json",
-//             },
-//             cache: "no-store",
-//         });
 
-//         if (!res.ok) return { data: null, error: "Unauthorized" };
-
-//         const session = await res.json();
-        
-//         // Better Auth অনেক সময় সেশন না থাকলে null পাঠায়
-//         if (!session || !session.user) {
-//             return { data: null, error: "No session" };
-//         }
-
-//         return { data: session, error: null };
-//     } catch (error) {
-//         console.error("Session Fetch Error:", error);
-//         return { data: null, error };
-//     }
-// },
-
-    getMyProfile: async () => {
+    getCurrentUser: async () => {
         try {
             const cookieStore = await cookies()
 

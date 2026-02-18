@@ -26,8 +26,7 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 // import Logout from "../modules/authentication/logout";
-import l from "../../../public/l.png";
-import mlogo from "./../../public/l.png";
+
 import { useSelector } from "react-redux";
 // import { RootState } from "../../store";
 import LogOut from "../modules/authentication/logout";
@@ -69,12 +68,6 @@ interface Navbar1Props {
 
 const Navbar2 = ({
     user,
-    logo = {
-        url: "/",
-        src: '/l.png',
-        msrc: '/mlogo.png',
-        alt: "logo",
-    },
     menu = [
         { title: "Home", url: "/" },
         {
@@ -115,10 +108,11 @@ const Navbar2 = ({
                 <nav className="hidden items-center justify-between lg:flex">
                     <div className="flex items-center gap-6">
                         <Link
-                            href={logo.url}
+                            href={'/'}
                             className="flex items-center gap-2 relative w-35 h-10"
-                        >
-                            {/* <Image src={logo.src} alt={logo.alt} fill /> */}
+                        > 
+                           
+                            <span>medi store</span>
                         </Link>
                         <div className="flex items-center">
                             <NavigationMenu>
@@ -189,10 +183,10 @@ const Navbar2 = ({
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <Link
-                            href={logo.url}
+                            href={'/'}
                             className="flex items-center gap-2 relative w-10 h-10"
                         >
-                            <Image src={logo.msrc} alt={logo.alt} fill />
+                          
                         </Link>
                         <div className="flex items-center gap-3">
                             {user && (
@@ -219,18 +213,12 @@ const Navbar2 = ({
                                 <SheetContent className="overflow-y-auto">
                                     <SheetHeader>
                                         <SheetTitle>
-                                            <a
-                                                href={logo.url}
+                                            <Link
+                                                href={'/'}
                                                 className="flex items-center gap-2"
                                             >
-                                                <Image
-                                                    src={logo.src}
-                                                    className="max-h-8"
-                                                    alt={logo.alt}
-                                                    width={100}
-                                                    height={100}
-                                                />
-                                            </a>
+                                                
+                                            </Link>
                                         </SheetTitle>
                                     </SheetHeader>
                                     <div className="flex flex-col gap-6 p-4">

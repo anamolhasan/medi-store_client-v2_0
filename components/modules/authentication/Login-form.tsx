@@ -29,6 +29,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Roles } from "@/constants/roles";
 import { authClient } from "@/lib/auth-client";
 import { env } from "@/env";
+import { useUser } from "@/contexts/UserContext";
 
 const formSchema = z.object({
     email: z.email("Invalid email"),
@@ -38,8 +39,9 @@ const formSchema = z.object({
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const router = useRouter();
-//   console.log(router)
+ 
+
+  const {refetchUser} = useUser()
 
 
    const form = useForm({
@@ -61,9 +63,24 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         
         toast.success("Login successful", { id: toastId });
 
+        await refetchUser();
+
+        // Redirect based on user role if available
+        if(data?.user){
+            const userRole = (data.user as any).role;
+            if(userRole === Roles.customer){
+                window.location.href = '/';
+            }else if(userRole === Roles.seller){
+                window.location.href = '/seller';
+            }else if(userRole === Roles.admin){
+                window.location.href = '/admin'
+            }
+        }
+
     
     } catch (error) {
         toast.error("Something went wrong", { id: toastId });
+        console.log(error)
     }
 }
     });
