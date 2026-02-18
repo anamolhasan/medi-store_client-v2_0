@@ -1,4 +1,6 @@
 import { Category } from "./category.type";
+import { OrderItem } from "./order.type";
+import { Review } from "./review.type";
 import { User } from "./user.type";
 
 
@@ -20,4 +22,26 @@ export interface Medicine {
     // Relations (usually optional, depending on your query)
     category?:Category;
     seller?:User;
+    orderItems?: OrderItem[];
+    reviews?:Review[];
+}
+
+export interface CreateMedicine {
+    name:string;
+    description:string;
+    price:number;
+    stock:number;
+    manufacturer:string;
+    imageUrl:string;
+    sellerId:string;
+}
+
+export interface UpdateMedicine {
+    name?:string;
+    description?:string;
+    price?:number;
+    stock?:number;
+    manufacturer?:string;
+    imageUrl?:string;
+
 }
