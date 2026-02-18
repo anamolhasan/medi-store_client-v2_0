@@ -14,8 +14,8 @@ export interface User {
     name:string;
     email:string;
     emailVerified:boolean;
-    image:string | null;
-    phone: string | null;
+    image?:string | null;
+    phone?: string | null;
     role: Role;
     status:UserStatus;
     createdAt: string;

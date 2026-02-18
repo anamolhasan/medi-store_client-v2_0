@@ -47,8 +47,10 @@ interface Navbar1Props {
     className?: string;
     logo?: {
         url: string;
-        src: StaticImageData;
-        msrc: StaticImageData;
+        src: string | StaticImageData
+
+        msrc: string | StaticImageData
+
         alt: string;
         className?: string;
     };
@@ -81,7 +83,7 @@ const Navbar2 = ({
         },
         {
             title: "Dashboard",
-            url: user ? `/dashboard/customer-dashboard` : "/login",
+            url: user ? `/customer/profile` : "/login",
         },
     ],
     auth = {
@@ -116,7 +118,7 @@ const Navbar2 = ({
                             href={logo.url}
                             className="flex items-center gap-2 relative w-35 h-10"
                         >
-                            <Image src={logo.src} alt={logo.alt} fill />
+                            {/* <Image src={logo.src} alt={logo.alt} fill /> */}
                         </Link>
                         <div className="flex items-center">
                             <NavigationMenu>

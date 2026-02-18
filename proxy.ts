@@ -1,52 +1,124 @@
 
+// import { NextRequest, NextResponse } from "next/server";
+// import { userService } from "./services/user.service";
+// import { Roles } from "./constants/roles";
+
+
+// export async function proxy(request:NextRequest){
+//     const pathname = request.nextUrl.pathname;
+// // console.log(pathname)
+//     let isAuthenticated = false;
+//     let isAdmin = false;
+//     let isSeller = false;
+
+//     const {data} = await userService.getSession()
+//     console.log(data)
+
+
+//      // ✅ cookie read
+//     //  const sessionCookie = request.cookies.get("better-auth.session");
+//     // console.log(sessionCookie)
+//  // ❌ Not logged in
+// //   if (!sessionCookie) {
+// //     return NextResponse.redirect(new URL("/login", request.url));
+// //   }
+
+//     if(data){
+//         isAuthenticated = true;
+//         isAdmin = data.user.role === Roles.admin
+//         isSeller = data.user.role === Roles.seller
+//     }
+ 
+//      // ❌ Not logged in
+//     if(!isAuthenticated){
+//         return NextResponse.redirect(new URL('/login', request.url))
+//     }
+
+//     const role = data.user.role;
+// //    🔒 Admin guar
+//     if(role === Roles.admin && !pathname.startsWith('/admin')){
+//         return NextResponse.redirect(new URL('/admin', request.url))
+//     }
+//    // 🔒 Seller guard
+//     if(role === Roles.seller && !pathname.startsWith('/seller')){
+//         return NextResponse.redirect(new URL('/seller', request.url))
+//     }
+//      // 🔒 Customer guard
+//     if(role === Roles.customer && !pathname.startsWith('/customer')){
+//         return NextResponse.redirect(new URL('/customer', request.url))
+//     }
+
+//     // ✅ Allow request
+//     return NextResponse.next()
+
+// }
+
+// export const config = {
+//     matcher: [
+//         '/admin/:path*',
+//         '/seller/:path*',
+//         '/customer/:path*'
+//     ]
+// }
+
+
+
+// -------------------------------------------------------
+// -------------------------------------------------------
+
 import { NextRequest, NextResponse } from "next/server";
 import { userService } from "./services/user.service";
 import { Roles } from "./constants/roles";
 
-
-
 export async function proxy(request:NextRequest){
     const pathname = request.nextUrl.pathname;
-// console.log(pathname)
-    let isAuthenticated = false;
-    let isAdmin = false;
-    let isSeller = false;
+    let isAuthenticated:boolean = false;
+    let userRole: string | null = null
 
     const {data} = await userService.getSession()
-    // console.log(data)
 
     if(data){
         isAuthenticated = true;
-        isAdmin = data.user.role === Roles.admin
-        isSeller = data.user.role === Roles.seller
+        userRole = data?.user?.role;
     }
- 
-     // ❌ Not logged in
+
+    // user is not authenticated
     if(!isAuthenticated){
         return NextResponse.redirect(new URL('/login', request.url))
     }
 
-    const role = data.user.role;
-   // 🔒 Admin guar
-    if(role === Roles.admin && !pathname.startsWith('/admin')){
-        return NextResponse.redirect(new URL('/admin', request.url))
-    }
-   // 🔒 Seller guard
-    if(role === Roles.seller && !pathname.startsWith('/seller')){
-        return NextResponse.redirect(new URL('/seller', request.url))
-    }
-     // 🔒 Customer guard
-    if(role === Roles.customer && !pathname.startsWith('/customer')){
-        return NextResponse.redirect(new URL('/customer', request.url))
+    const roleDashboardMap: Record<string, string> = {
+        [Roles.admin]:'/admin',
+        [Roles.seller]:'/seller',
+        [Roles.customer]:'/customer'
     }
 
-    // ✅ Allow request
-    return NextResponse.next()
+    // Get the correct dashboard for the user's role
+    const userDashboard = roleDashboardMap[userRole as string];
+
+    // if user tries to access a dashboard that's not theirs, redirect to their dashboard
+    // //    🔒 Admin guar
+    if(pathname.startsWith('/admin') && userRole !== Roles.admin){
+        return NextResponse.redirect(new URL(userDashboard, request.url))
+    }
+    if(pathname.startsWith('/seller') && userRole !== Roles.seller){
+        return NextResponse.redirect(new URL(userDashboard, request.url))
+    }
+    if(pathname.startsWith('/customer') && userRole !== Roles.customer){
+        return NextResponse.redirect(new URL(userDashboard, request.url))
+    }
+
+
+    // Default allow access
+    return NextResponse.next();
 
 }
 
 export const config = {
-    matcher: [
+    matcher:[
+        '/admin',
+        '/seller',
+        '/customer',
         '/admin/:path*',
         '/seller/:path*',
         '/customer/:path*'

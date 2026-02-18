@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import z, { email } from "zod";
 import { Badge } from "../../ui/badge";
 import { FcGoogle } from "react-icons/fc";
+import { env } from "@/env";
 
 const formSchema = z.object({
   name: z.string().min(1, "This field is required"),
@@ -64,8 +65,8 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
         console.log(data);
 
         toast.success("Registration success", { id: toastId });
-        router.push("/");
-        router.refresh();
+        // router.push("/");
+        // router.refresh();
       } catch (error) {
         console.log(error);
         toast.error("Something went wrong,", {
@@ -76,9 +77,10 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
   });
 
   const handleGoogleLogin = async () => {
+    toast.loading('user registration processing');
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000",
+      callbackURL: env.NEXT_PUBLIC_FRONTEND_URL,
     });
   };
 

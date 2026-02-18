@@ -73,7 +73,7 @@ export default function Footer1() {
         {/* Brand + Subscribe */}
         <div>
           {/* Logo */}
-          <Image src="/logo-zenvira.svg" alt="Logo" width={180} height={36} />
+          {/* <Image src="/logo-zenvira.svg" alt="Logo" width={180} height={36} /> */}
 
           <p className="text-sm my-4">{footerData.brand.tagline}</p>
 
