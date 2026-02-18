@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProviderWrapper>
+        {/* <ReduxProviderWrapper> */}
           <UserProvider>
             <ThemeProvider
               attribute="class"
@@ -43,7 +43,7 @@ export default function RootLayout({
               <Toaster richColors />
             </ThemeProvider>
           </UserProvider>
-        </ReduxProviderWrapper>
+        {/* </ReduxProviderWrapper> */}
       </body>
     </html>
   );

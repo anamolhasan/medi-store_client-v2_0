@@ -42,22 +42,21 @@ export const userService = {
         try {
             const cookieStore = await cookies()
 
-            const res = await fetch(`${API_URL}/user/me`, {
+            const res = await fetch(`${API_URL}/api/v1/users/me`, {
                 headers:{
                     Cookie:cookieStore.toString(),
                 },
                 cache:"no-store",
-                next:{tags:["me"]},
             })
-            const session = await res.json();
-            if(session === null){
+            const user = await res.json();
+            if(!user){
                 return {
                     data:null,
                     error:{message:'No session found', error:null}
                 }
             }
 
-            return {data: session, error:null}
+            return {data: user, error:null}
         } catch (error) {
             console.log(error)
             return {
@@ -67,11 +66,17 @@ export const userService = {
         }
     },
 
-    getAllUsers: async () => {
+    getAllUsers: async (params:{
+        search?:string;
+        page?:string;
+        limit?:string;
+        sortBy?:string;
+        sortOrder?:string;
+    }) => {
         try {
             const cookieStore = await cookies();
 
-            const res = await fetch(`${API_URL}/user`, {
+            const res = await fetch(`${API_URL}/api/v1/users`, {
                 headers:{
                     Cookie:cookieStore.toString(),
                 },
@@ -97,10 +102,34 @@ export const userService = {
         }
     },
 
+    getUser: async function (userId: string) {
+    try {
+      const cookieStore = await cookies();
+
+      const res = await fetch(`${API_URL}/api/v1/users/${userId}`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+      });
+
+      const user = await res.json();
+
+      if (!user) {
+        return { data: null, error: { message: "User not found." } };
+      }
+
+      return { data: user, error: null };
+    } catch (error) {
+      console.error(error);
+      return { data: null, error: { message: "Something went wrong." } };
+    }
+  },
+
     getCustomerStats: async () => {
         try {
             const cookieStore = await cookies()
-            const res = await fetch(`${API_URL}/user/customer/status`, {
+            const res = await fetch(`${API_URL}/api/v1/users/customer/status`, {
                 headers:{
                     Cookie:cookieStore.toString(),
                 },
@@ -127,7 +156,7 @@ export const userService = {
         try {
             const cookieStore = await cookies()
 
-            const res = await fetch(`${API_URL}/user/seller/status`, {
+            const res = await fetch(`${API_URL}/api/v1/users/seller/status`, {
                 headers:{
                     Cookie:cookieStore.toString(),
                 },
@@ -156,7 +185,7 @@ export const userService = {
         try {
             const cookieStore = await cookies();
 
-            const res = await fetch(`${API_URL}/user/admin/status`,{
+            const res = await fetch(`${API_URL}/api/v1/users/admin/status`,{
                 headers:{
                     Cookie:cookieStore.toString(),
                 },
@@ -182,7 +211,7 @@ export const userService = {
     updateUser: async (id:string, data:UpdateUser) => {
           try {
             const cookieStore = await cookies();
-            const res = await fetch(`${API_URL}/user/${id}`, {
+            const res = await fetch(`${API_URL}/api/v1/users/${id}`, {
                 method:'PATCH',
                 headers:{
                     "Content-Type":"application/json",

@@ -4,10 +4,6 @@ import Footer1 from '@/components/layout/Footer1'
 import { Navbar2 } from '@/components/layout/Navbar2'
 
 
-
-
-import React from 'react'
-
 const layout = ({children}:{children:React.ReactNode}) => {
   return (
     <div>
@@ -16,7 +12,7 @@ const layout = ({children}:{children:React.ReactNode}) => {
         <main className='container mx-auto'>
             {children}
         </main>
-        {/* <Footer /> */}
+    
         <Footer1 />
     </div>
   )
