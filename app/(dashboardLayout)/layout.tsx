@@ -1,6 +1,6 @@
 import React from 'react'
 
-const layout = ({
+const DashboardLayout = ({
     admin,
     customer,
     seller
@@ -18,4 +18,4 @@ const layout = ({
   )
 }
 
-export default layout
+export default DashboardLayout
