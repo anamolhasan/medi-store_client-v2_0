@@ -1,7 +1,8 @@
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const DefaultSeller = () => {
-  return null
+  redirect('/seller/profile')
 }
 
 export default DefaultSeller

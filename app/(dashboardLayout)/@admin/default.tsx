@@ -1,7 +1,8 @@
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const DefaultAdmin = () => {
-  return null
+  redirect('/admin/my-profile')
 }
 
 export default DefaultAdmin
