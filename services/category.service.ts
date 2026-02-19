@@ -34,7 +34,7 @@ export const categoryService = {
         }
     },
 
-    addCategories: async () => {
+    addCategories: async (name:string) => {
         try {
             const cookieStore = await cookies();
 

@@ -205,14 +205,18 @@ function FieldError({
     ]
 
     if (uniqueErrors?.length == 1) {
-      return uniqueErrors[0]?.message
+      const message = uniqueErrors[0]?.message
+      return typeof message === 'string' ? message : (message?.message ?? 'An error occurred')
     }
 
     return (
       <ul className="ml-4 flex list-disc flex-col gap-1">
         {uniqueErrors.map(
-          (error, index) =>
-            error?.message && <li key={index}>{error.message}</li>
+          (error, index) => {
+            const message = error?.message
+            const messageText = typeof message === 'string' ? message : (message?.message ?? '')
+            return messageText ? <li key={index}>{messageText}</li> : null
+          }
         )}
       </ul>
     )
