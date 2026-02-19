@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { CreateMedicine, UpdateMedicine } from "@/types";
 import { cookies } from "next/headers";
 
 
@@ -119,5 +120,76 @@ export const medicineService = {
         }
     },
 
-    updateMedicine: async (id:string, data:UpdateMedicine)
+    updateMedicine: async (id:string, data:UpdateMedicine) => {
+        try {
+            const cookieStore = await cookies();
+
+            const res = await fetch(`${API_URL}/api/v1/medicine/${id}`, {
+                method:'PATCH',
+                headers:{
+                    'Content-Type':'application/json',
+                    Cookie:cookieStore.toString(),
+                },
+                body:JSON.stringify(data),
+                cache:'no-store'
+            })
+
+            if(!res.ok){
+                const errBody = await res.json().catch(()=> null)
+                return {
+                    data:null,
+                    error:{
+                        message:
+                          errBody?.message ?? 'Failed to update medicine',
+                        error: errBody ?? null,
+                    }
+                }
+            }
+
+            const updated = await res.json();
+            return {data: updated, error:null}
+        } catch (error) {
+            console.log(error)
+            return {
+                data:null,
+                error:{message:'Something went wrong', error}
+            }
+        }
+    },
+
+    createMedicine: async (data: CreateMedicine) => {
+        try {
+            const cookieStore = await cookies();
+            const res = await fetch(`${API_URL}/api/v1/medicine`, {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    Cookie: cookieStore.toString(),
+                },
+                body:JSON.stringify(data),
+                cache:'no-store',
+            })
+
+            if(!res.ok){
+                const errBody = await res.json().catch(()=>null)
+                return {
+                    data:null,
+                    error: {
+                        message:
+                          errBody?.message?? 'Failed to create medicine',
+                        error:errBody?? null,
+                    }
+                }
+            }
+
+            const updated = await res.json();
+            return {data:updated, error:null}
+        } catch (error) {
+            console.log(error)
+            return {
+                data:null,
+                error:{message:'Something went wrong', error}
+            }
+        }
+    }
 }
