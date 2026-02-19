@@ -1,5 +1,5 @@
-import AddCategory from '@/components/modules/admin/AddCategory'
-import CategoryTable from '@/components/modules/admin/CategoryTable'
+import AddCategory from '@/components/modules/admin/category/AddCategory'
+import CategoryTable from '@/components/modules/admin/category/CategoryTable'
 import { categoryService } from '@/services/category.service'
 import { Category } from '@/types'
 import React from 'react'

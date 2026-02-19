@@ -66,13 +66,7 @@ export const userService = {
         }
     },
 
-    getAllUsers: async (params:{
-        search?:string;
-        page?:string;
-        limit?:string;
-        sortBy?:string;
-        sortOrder?:string;
-    }) => {
+    getAllUsers: async () => {
         try {
             const cookieStore = await cookies();
 
