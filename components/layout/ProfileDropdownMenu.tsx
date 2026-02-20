@@ -9,7 +9,7 @@ import { Button } from "../ui/button"
 import { UserIcon } from "lucide-react"
 import Link from "next/link"
 import { Roles } from "@/constants/roles"
-import { ModeToggle } from "./ModeToggle"
+
 
 const ProfileDropdownMenu = () => {
     const {user, setUser} = useUser()
@@ -81,9 +81,9 @@ const ProfileDropdownMenu = () => {
                     Dashboard
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                     <ModeToggle />
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

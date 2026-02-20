@@ -23,6 +23,7 @@ import { ModeToggle } from "./ModeToggle";
 import { useUser } from "@/contexts/UserContext";
 import { Roles } from "@/constants/roles";
 import ProfileDropdownMenu from "./ProfileDropdownMenu";
+import { ThemeProvider } from "@/app/provider/ThemeProvider";
 
 interface MenuItem {
     title: string;
@@ -124,6 +125,7 @@ console.log(user)
                     </div>
                     
                     <div className="flex gap-2 items-center">
+                        <ModeToggle />
                         {/* cart button */}
                         <Button >
                             <ShoppingCart className="h-5 w-5"/>
