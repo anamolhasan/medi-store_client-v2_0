@@ -1,9 +1,10 @@
+import { Medicine } from "@/types";
+import { loadCartFromStorage } from "@/utils/saveCartToStorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CartItem {
-  id: string;
-  quantity: number;
-  [key: string]: any;
+  medicine:Medicine;
+  quantity:number;
 }
 
 export interface CartState {
@@ -11,32 +12,68 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  items: [],
+  items: loadCartFromStorage(),
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    addItem(state, action: PayloadAction<CartItem>) {
-      const idx = state.items.findIndex((i) => i.id === action.payload.id);
-      if (idx >= 0) {
-        state.items[idx].quantity += action.payload.quantity;
-      } else {
-        state.items.push(action.payload);
-      }
+    reducers: {
+        addToCart: (
+            state,
+            action: PayloadAction<{medicine: Medicine; quantity?: number}>,
+        ) => {
+            const { medicine, quantity = 1 } = action.payload;
+
+            const existingItem = state.items.find(
+                (item) => item.medicine.id === medicine.id,
+            );
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                state.items.push({
+                    medicine,
+                    quantity,
+                });
+            }
+        },
+
+        removeOneFromCart: (state, action: PayloadAction<string>) => {
+            const itemIndex = state.items.findIndex(
+                (item) => item.medicine.id === action.payload,
+            );
+
+            if (itemIndex !== -1) {
+                if (state.items[itemIndex].quantity > 1) {
+                    state.items[itemIndex].quantity -= 1;
+                } else {
+                    state.items.splice(itemIndex, 1);
+                }
+            }
+        },
+
+        removeFromCart: (state, action: PayloadAction<string>) => {
+            state.items = state.items.filter(
+                (item) => item.medicine.id !== action.payload,
+            );
+        },
+
+        clearCart: (state) => {
+            state.items = [];
+        },
+
+        hydrateCart: (state, action: PayloadAction<CartItem[]>) => {
+            state.items = action.payload;
+        },
     },
-    removeItem(state, action: PayloadAction<string>) {
-      state.items = state.items.filter((i) => i.id !== action.payload);
-    },
-    setItems(state, action: PayloadAction<CartItem[]>) {
-      state.items = action.payload;
-    },
-    clearCart(state) {
-      state.items = [];
-    },
-  },
 });
 
-export const { addItem, removeItem, setItems, clearCart } = cartSlice.actions;
+export const {
+    addToCart,
+    removeOneFromCart,
+    removeFromCart,
+    clearCart,
+    hydrateCart,
+} = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

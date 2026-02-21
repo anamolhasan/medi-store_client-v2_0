@@ -71,38 +71,38 @@ export const categoryService = {
         }
     },
 
-    deleteCategories: async (id:string) => {
+      deleteCategories: async (id: string) => {
         try {
             const cookieStore = await cookies();
 
             const res = await fetch(`${API_URL}/api/v1/category/${id}`, {
-                method: 'DELETE',
-                headers:{
-                    Cookie:cookieStore.toString(),
+                method: "DELETE",
+                headers: {
+                    Cookie: cookieStore.toString(),
                 },
-                cache:'no-store',
+                cache: "no-store",
             });
 
             // Some APIs return 204 with no body
-            const data = await res.json().catch(()=> null)
+            const data = await res.json().catch(() => null);
 
-            if(!res.ok){
+            if (!res.ok) {
                 return {
-                    data:null,
-                    error:{
-                        message:{
-                            message:data?.message ?? 'Failed to delete category',
-                            error:data ?? null
-                        }
-                    }
-                }
+                    data: null,
+                    error: {
+                        message: data?.message ?? "Failed to delete category",
+                        error: data ?? null,
+                    },
+                };
             }
-            return {data, error:null}
+
+            return { data, error: null };
         } catch (error) {
+            console.log(error);
             return {
-                data:null,
-                error: {message:'Something went wrong', error}
-            }
+                data: null,
+                error: { message: "Something went wrong", error },
+            };
         }
     },
 

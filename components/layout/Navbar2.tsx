@@ -84,7 +84,7 @@ const Navbar2 = ({
   
    const {user, setUser} = useUser();
    const totalItems = 0
-console.log(user)
+// console.log(user)
    const dashboardUrl = (()=> {
     const role = (user as {role?:string} | null)?.role;
     switch(role){
@@ -111,9 +111,9 @@ console.log(user)
                     <div className="flex items-center gap-6">
                         <Link
                             href={logo.url}
-                            className="flex items-center gap-2 relative w-35 h-10"> 
-                             {/* akane akta logo dete hobe */}
-                            <span>medi store</span>
+                            className="flex items-center gap-2 relative w-35 h-10 text-2xl font-bold"> 
+                             {/* akane akta logo dete hobe */}medi
+                            <span className="text-green-700"> store</span>
                         </Link>
                         <div className="flex items-center">
                             <NavigationMenu>

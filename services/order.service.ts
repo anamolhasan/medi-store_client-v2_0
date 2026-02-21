@@ -26,7 +26,7 @@ export const orderService = {
                 return {
                     data:null,
                     error:{
-                        message:errorBody?.message?? 'Failed to create order',
+                        message:errorBody?.message ?? 'Failed to create order',
                         error:errorBody ?? null,
                     }
                 }
@@ -43,38 +43,38 @@ export const orderService = {
          }
     },
 
-    getAllOrders: async () => {
+ getAllOrders: async () => {
         try {
             const cookieStore = await cookies();
             const res = await fetch(`${API_URL}/api/v1/order`, {
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json',
-                    Cookie:cookieStore.toString(),
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString(),
                 },
-                cache:'no-store',
-                next:{tags:['orders']},
-            })
+                cache: "no-store",
+                next: { tags: ["orders"] },
+            });
 
-            if(!res.ok){
-                const errBody = await res.json().catch(()=> null);
+            if (!res.ok) {
+                const errBody = await res.json().catch(() => null);
                 return {
-                    data:null,
-                    error:{
-                        message:errBody?.message??'Failed to get order',
-                        error:errBody??null,
-                    }
-                }
+                    data: null,
+                    error: {
+                        message: errBody?.message ?? "Failed to get order",
+                        error: errBody ?? null,
+                    },
+                };
             }
 
             const updated = await res.json();
-            return {date:updated, error:null}
+            return { data: updated, error: null };
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return {
-                data:null,
-                error:{message:'Something went wrong'}
-            }
+                data: null,
+                error: { message: "Something went wrong", error },
+            };
         }
     },
 

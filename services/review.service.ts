@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 const API_URL = env.API_URL;
 
-const reviewService = {
+export const reviewService = {
       createReview: async (data: Partial<Review>) => {
         try {
             const cookieStore = await cookies();

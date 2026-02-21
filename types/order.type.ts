@@ -9,7 +9,7 @@ export enum OrderStatus {
     PROCESSING = 'PROCESSING',
     SHIPPED = 'SHIPPED',
     DELIVERED = 'DELIVERED',
-    CANCELED = 'CANCELED',
+    CANCELLED = 'CANCELLED',
 }
 
 // interfaces
@@ -26,7 +26,7 @@ export interface Order {
 
     // Relations
     customer?:User;
-    items?:OrderItem
+    items?:OrderItem[]
 }
 
 export interface OrderItem {

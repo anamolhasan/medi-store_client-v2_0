@@ -1,10 +1,10 @@
-'use client'
 
 import Footer1 from '@/components/layout/Footer1'
 import { Navbar2 } from '@/components/layout/Navbar2'
 
 
-const layout = ({children}:{children:React.ReactNode}) => {
+const RootLayout = async ({children}:{children:React.ReactNode}) => {
+ 
   return (
     <div>
       <Navbar2 />
@@ -18,4 +18,4 @@ const layout = ({children}:{children:React.ReactNode}) => {
   )
 }
 
-export default layout
+export default RootLayout

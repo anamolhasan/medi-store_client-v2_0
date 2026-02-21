@@ -9,8 +9,8 @@ export async function getCurrentUser(){
     return await userService.getCurrentUser()
 }
 
-export async function getUser(userId:string){
-    return await userService.getUser(userId)
+export async function getUser(){
+    return await userService.getSession()
 }
 
 export const updateUser = async (id:string, data:UpdateUser) => {

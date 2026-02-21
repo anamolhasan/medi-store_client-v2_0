@@ -1,9 +1,8 @@
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const SellerPage = () => {
-  return (
-    <div>SellerPage</div>
-  )
+  return redirect('/seller/dashboard')
 }
 
 export default SellerPage

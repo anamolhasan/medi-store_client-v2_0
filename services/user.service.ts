@@ -47,6 +47,7 @@ export const userService = {
                     Cookie:cookieStore.toString(),
                 },
                 cache:"no-store",
+                next:{tags:['me']},
             })
             const user = await res.json();
             if(!user){
