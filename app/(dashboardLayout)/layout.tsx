@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { AppSidebar } from '@/components/app-sidebar';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
@@ -19,10 +21,12 @@ const DashboardLayout = async ({
     customer:React.ReactNode,
     seller:React.ReactNode,
 }) => {
-  const {data} = await userService.getSession();
+    const { data } = await userService.getSession();
 
-  const user = data.user;
-  const role = data?.user?.role as Role | undefined;
+    if (!data || !data.user) return null;
+
+    const user = data.user;
+    const role = data.user.role as Role | undefined;
 
   const roleView = {
     ADMIN: admin,

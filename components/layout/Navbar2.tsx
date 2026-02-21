@@ -127,14 +127,16 @@ const Navbar2 = ({
                     <div className="flex gap-2 items-center">
                         <ModeToggle />
                         {/* cart button */}
-                        <Button >
+                        {user && (
+                            <Link href={'/cart'} >
                             <ShoppingCart className="h-5 w-5"/>
                             {totalItems > 0 && (
                                 <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                                     {totalItems > 99 ? '99+' : totalItems}
                                 </span>
                             )}
-                        </Button>
+                        </Link>
+                        )}
                         {
                             user ? (
                                 <>
@@ -268,7 +270,7 @@ const Navbar2 = ({
             </div>
 
             {/* Cart Sheet */}
-            <span>Cart Sheet</span>
+            {/* <span>Cart Sheet</span> */}
         </section>
     );
 };

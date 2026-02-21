@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { updateUser } from "@/actions/user.actions";
 import { User, UserStatus } from "@/types";
@@ -14,18 +14,14 @@ import { Button } from "../ui/button";
 
 
 
-
-
-const emptyToUndefined = (v:unknown) => (v === ''? undefined : v);
-
 const formSchema = z.object({
-    name: z.preprocess(emptyToUndefined, z.string().optional()),
-    email: z.preprocess(emptyToUndefined, z.string().email().optional()),
-    image: z.preprocess(emptyToUndefined, z.string().url().optional()),
-    status: z.preprocess(emptyToUndefined, z.string().optional())
+    name: z.string(),
+    email: z.string().email(),
+    image: z.string(),
+    status: z.nativeEnum(UserStatus),
+});
 
-})
-const MyProfile = ({user}:{user:User}) => {
+export default function MyProfile({ user }: { user: User }) {
     const form = useForm({
         defaultValues: {
             name: user.name,
@@ -34,37 +30,35 @@ const MyProfile = ({user}:{user:User}) => {
             status: user.status,
         },
         validators: {
-                    onSubmit: formSchema,
-                },
-        onSubmit: async ({value}) => {
-          const toastId = toast.loading('Updating Profile...');
-          const serverData: Partial<{name:string; image:string}>={};
+            onSubmit: formSchema,
+        },
+        onSubmit: async ({ value }) => {
+            const toastId = toast.loading("Updating Profile...");
+            const serverData: Partial<{ name: string; image: string }> = {};
+            if (value.name !== undefined) serverData.name = value.name;
+            if (value.image !== undefined) serverData.image = value.image;
 
-          if(value.name !== undefined) serverData.name = value.name;
-          if(value.image !== undefined) serverData.image = value.image;
+            try {
+                const { data, error } = await updateUser(user.id, serverData);
+                if (error) {
+                    toast.error(error.message, { id: toastId });
+                    return;
+                }
 
-          try {
-            const {data, error} = await updateUser(user.id, serverData);
-
-            if (error) {
-            toast.error(error.message, { id: toastId });
-            return;
+                toast.success(data.message || "Profile updated successfully", {
+                    id: toastId,
+                });
+            } catch (error) {
+                console.error(error);
+                toast.error("Something went wrong, please try again.", {
+                    id: toastId,
+                });
             }
+        },
+    });
 
-            toast.success(data?.message || "Profile updated successfully", {
-            id: toastId,
-            });
-
-          } catch (error) {
-            console.error(error);
-            toast.error('Something went wrong, please try again.', {
-                id: toastId
-            })
-          }
-         }
-    })
-  return (
-     <div className="mb-10">
+    return (
+        <div className="mb-10">
             <h2 className="text-2xl font-semibold mb-5">My Profile</h2>
             <div className="grid gap-6 lg:grid-cols-3">
                 <Card className="lg:col-span-1 rounded-2xl">
@@ -270,7 +264,5 @@ const MyProfile = ({user}:{user:User}) => {
                 </Card>
             </div>
         </div>
-  )
+    );
 }
-
-export default MyProfile

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Banner from "@/components/modules/home/Banner";
 import CategoryHome from "@/components/modules/home/CategoryHome";
 import MedicineHome from "@/components/modules/home/MedicineHome";
